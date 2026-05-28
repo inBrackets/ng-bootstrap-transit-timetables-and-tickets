@@ -1,0 +1,53 @@
+<div class="card h-100 transit-card">
+  <div class="card-header d-flex justify-content-between align-items-center py-2">
+    <span class="fw-semibold text-muted small">
+      <i class="bi bi-bus-front-fill me-1 text-success"></i>{{ bus().busNumber }}
+    </span>
+    <span class="badge bg-success fs-6 px-3">€{{ bus().price }}</span>
+  </div>
+
+  <div class="card-body pb-2">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <div class="text-start">
+        <div class="fw-bold fs-5">{{ bus().from }}</div>
+        <div class="fs-4 fw-bold text-success">{{ formatTime(bus().departure) }}</div>
+        <div class="text-muted small">{{ formatDate(bus().departure) }}</div>
+      </div>
+
+      <div class="text-center px-2 flex-grow-1">
+        <div class="text-muted small mb-1">{{ duration }}</div>
+        <div class="d-flex align-items-center gap-1">
+          <div class="flex-grow-1" style="height:2px;background:linear-gradient(to right,#dee2e6,#198754)"></div>
+          <i class="bi bi-arrow-right text-success"></i>
+        </div>
+        <div class="text-muted small mt-1">Direct</div>
+      </div>
+
+      <div class="text-end">
+        <div class="fw-bold fs-5">{{ bus().to }}</div>
+        <div class="fs-4 fw-bold text-success">{{ formatTime(bus().arrival) }}</div>
+        <div class="text-muted small">{{ formatDate(bus().arrival) }}</div>
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-between align-items-center">
+      <span class="text-muted small" [ngbTooltip]="bus().operator">
+        <i class="bi bi-building me-1"></i>{{ bus().operator }}
+      </span>
+      <span class="small" [class.text-danger]="bus().seats < 10" [class.text-warning]="bus().seats >= 10 && bus().seats < 20" [class.text-muted]="bus().seats >= 20">
+        <i class="bi bi-people me-1"></i>{{ bus().seats }} seats
+      </span>
+    </div>
+  </div>
+
+  <div class="card-footer bg-transparent pt-2">
+    <button class="btn w-100"
+            [class.btn-success]="!inBasket"
+            [class.btn-secondary]="inBasket"
+            [disabled]="inBasket"
+            (click)="addToBasket()">
+      <i class="bi me-2" [class.bi-cart-plus]="!inBasket" [class.bi-check-circle-fill]="inBasket"></i>
+      {{ inBasket ? 'Added to Basket' : 'Add to Basket' }}
+    </button>
+  </div>
+</div>

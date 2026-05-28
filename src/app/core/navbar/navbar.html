@@ -1,0 +1,44 @@
+<nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
+  <div class="container">
+    <a class="navbar-brand fw-bold" routerLink="/">
+      <i class="bi bi-signpost-split-fill me-2"></i>TransitBook
+    </a>
+
+    <button class="navbar-toggler border-0" type="button" (click)="collapsed.set(!collapsed())">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="navbar-collapse" [ngbCollapse]="collapsed()">
+      <ul class="navbar-nav me-auto gap-1">
+        <li class="nav-item">
+          <a class="nav-link px-3 rounded" routerLink="/trains" routerLinkActive="active"
+             (click)="collapsed.set(true)">
+            <i class="bi bi-train-front-fill me-1"></i>Trains
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link px-3 rounded" routerLink="/flights" routerLinkActive="active"
+             (click)="collapsed.set(true)">
+            <i class="bi bi-airplane-fill me-1"></i>Flights
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link px-3 rounded" routerLink="/buses" routerLinkActive="active"
+             (click)="collapsed.set(true)">
+            <i class="bi bi-bus-front-fill me-1"></i>Buses
+          </a>
+        </li>
+      </ul>
+
+      <a class="btn btn-outline-light position-relative" routerLink="/basket"
+         (click)="collapsed.set(true)">
+        <i class="bi bi-cart3 me-1"></i>Basket
+        @if (basket.count() > 0) {
+          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+            {{ basket.count() }}
+          </span>
+        }
+      </a>
+    </div>
+  </div>
+</nav>
