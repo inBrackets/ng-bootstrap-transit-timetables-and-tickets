@@ -34,7 +34,7 @@
       <span class="text-muted small" [ngbTooltip]="train().operator">
         <i class="bi bi-building me-1"></i>{{ train().operator }}
       </span>
-      <span class="small" [class.text-danger]="train().seats < 10" [class.text-warning]="train().seats >= 10 && train().seats < 20" [class.text-muted]="train().seats >= 20">
+      <span class="small" [class]="seatColorClass">
         <i class="bi bi-people me-1"></i>{{ train().seats }} seats
       </span>
     </div>

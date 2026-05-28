@@ -36,7 +36,7 @@
       <span class="text-muted small" [ngbTooltip]="flight().airline">
         <i class="bi bi-building me-1"></i>{{ flight().airline }}
       </span>
-      <span class="small" [class.text-danger]="flight().seats < 10" [class.text-warning]="flight().seats >= 10 && flight().seats < 20" [class.text-muted]="flight().seats >= 20">
+      <span class="small" [class]="seatColorClass">
         <i class="bi bi-people me-1"></i>{{ flight().seats }} seats
       </span>
     </div>

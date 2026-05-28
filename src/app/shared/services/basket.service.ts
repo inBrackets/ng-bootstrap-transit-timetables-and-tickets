@@ -41,6 +41,10 @@ export class BasketService {
   }
 
   private persist(): void {
-    sessionStorage.setItem(SESSION_KEY, JSON.stringify(this._items()));
+    try {
+      sessionStorage.setItem(SESSION_KEY, JSON.stringify(this._items()));
+    } catch {
+      // QuotaExceededError — basket stays in memory for the session
+    }
   }
 }

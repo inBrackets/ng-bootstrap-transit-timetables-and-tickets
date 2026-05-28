@@ -2,6 +2,7 @@ import { Component, inject, input } from '@angular/core';
 import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 import { BasketService } from '../../../../shared/services/basket.service';
 import { Bus } from '../../../../shared/models';
+import { transitDuration, transitFormatDate, transitFormatTime, transitSeatColorClass } from '../../../../shared/utils/transit.utils';
 
 @Component({
   selector: 'app-bus-card',
@@ -17,20 +18,10 @@ export class BusCardComponent {
     return this.basket.isInBasket(this.bus().id);
   }
 
-  protected get duration(): string {
-    const mins = (new Date(this.bus().arrival).getTime() - new Date(this.bus().departure).getTime()) / 60000;
-    const h = Math.floor(mins / 60);
-    const m = mins % 60;
-    return m > 0 ? `${h}h ${m}m` : `${h}h`;
-  }
-
-  protected formatTime(iso: string): string {
-    return iso.substring(11, 16);
-  }
-
-  protected formatDate(iso: string): string {
-    return new Date(iso).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
-  }
+  protected get duration(): string { return transitDuration(this.bus().departure, this.bus().arrival); }
+  protected get seatColorClass(): string { return transitSeatColorClass(this.bus().seats); }
+  protected formatTime(iso: string): string { return transitFormatTime(iso); }
+  protected formatDate(iso: string): string { return transitFormatDate(iso); }
 
   protected addToBasket(): void {
     const b = this.bus();

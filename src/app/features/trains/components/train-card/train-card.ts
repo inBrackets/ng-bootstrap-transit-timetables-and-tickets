@@ -2,6 +2,7 @@ import { Component, inject, input } from '@angular/core';
 import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 import { BasketService } from '../../../../shared/services/basket.service';
 import { Train } from '../../../../shared/models';
+import { transitDuration, transitFormatDate, transitFormatTime, transitSeatColorClass } from '../../../../shared/utils/transit.utils';
 
 @Component({
   selector: 'app-train-card',
@@ -17,20 +18,10 @@ export class TrainCardComponent {
     return this.basket.isInBasket(this.train().id);
   }
 
-  protected get duration(): string {
-    const mins = (new Date(this.train().arrival).getTime() - new Date(this.train().departure).getTime()) / 60000;
-    const h = Math.floor(mins / 60);
-    const m = mins % 60;
-    return m > 0 ? `${h}h ${m}m` : `${h}h`;
-  }
-
-  protected formatTime(iso: string): string {
-    return iso.substring(11, 16);
-  }
-
-  protected formatDate(iso: string): string {
-    return new Date(iso).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
-  }
+  protected get duration(): string { return transitDuration(this.train().departure, this.train().arrival); }
+  protected get seatColorClass(): string { return transitSeatColorClass(this.train().seats); }
+  protected formatTime(iso: string): string { return transitFormatTime(iso); }
+  protected formatDate(iso: string): string { return transitFormatDate(iso); }
 
   protected addToBasket(): void {
     const t = this.train();

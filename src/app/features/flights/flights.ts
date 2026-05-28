@@ -20,6 +20,12 @@ export class FlightsComponent implements OnInit {
   protected timeAfter = '00:00';
   protected timeBefore = '23:59';
   protected loading = true;
+  protected error = false;
+
+  get hasActiveFilters(): boolean {
+    return !!(this.fromFilter || this.toFilter || this.dateFilter ||
+      this.timeAfter !== '00:00' || this.timeBefore !== '23:59');
+  }
 
   get availableFroms(): string[] {
     return [...new Set(this.allFlights.map(f => f.from))].sort();
@@ -44,9 +50,9 @@ export class FlightsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.dataService.getAll().subscribe(data => {
-      this.allFlights = data;
-      this.loading = false;
+    this.dataService.getAll().subscribe({
+      next: data => { this.allFlights = data; this.loading = false; },
+      error: () => { this.loading = false; this.error = true; }
     });
   }
 
